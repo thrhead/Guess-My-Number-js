@@ -3,6 +3,7 @@
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let highscore = 0;
+
 const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
@@ -28,7 +29,14 @@ document.querySelector('.check').addEventListener('click', function () {
 
     // when guess is wrong
   } else if (guess !== secretNumber) {
-    displayMessage(guess > secretNumber ? '⬇️ Too High! ' : ' ⬆️ Too Low! ');
+    if (score > 1) {
+      displayMessage(guess > secretNumber ? '⬇️ Too High! ' : ' ⬆️ Too Low! ');
+      score--;
+      document.querySelector('.score').textContent = score;
+    } else {
+      displayMessage('💥 You lost the game!');
+      document.querySelector('.score').textContent = 0;
+    }
   }
 });
 //again part
@@ -38,7 +46,6 @@ document.querySelector('.again').addEventListener('click', function () {
 
   displayMessage('Start guessing...');
 
-  document.querySelector('.score').textContent = score;
   displayNumber('?');
 
   document.querySelector('.guess').value = '';
